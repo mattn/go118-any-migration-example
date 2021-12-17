@@ -23,17 +23,22 @@ func main() {
 
 	m, ok := v.(map[string]any)
 	if !ok {
-		log.Fatal("unexpected JSON: {...}")
+		log.Fatal(`unexpected JSON: {...}`)
 	}
 
-	a, ok := m["foo"].([]any)
+	v, ok = m["foo"]
 	if !ok {
-		log.Fatal("unexpected JSON")
+		log.Fatal(`unexpected JSON: {"foo": ...}`)
+	}
+
+	a, ok := v.([]any)
+	if !ok {
+		log.Fatal(`unexpected JSON: {"foo": "[...]"}`)
 	}
 
 	s, ok := a[0].(string)
 	if !ok {
-		log.Fatal("unexpected JSON")
+		log.Fatal(`unexpected JSON: {"foo": ["bar", "baz"]}`)
 	}
 
 	fmt.Println(s)
